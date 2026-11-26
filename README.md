@@ -48,6 +48,9 @@ For local non-Docker execution set `REDIS_URL=redis://localhost:6379` in `.env`,
 
 Three core unit tests pass in Node 22. Dependency installation, full type-checking, Docker build, Redis integration, live model calls, and GitHub webhook/posting were not verified in the creation environment. CI is provided to run the additional checks. Dependencies are not lockfile-pinned yet; generate and commit a lockfile after successful installation. Before production use, add integration tests, request throttling, authenticated status access, metrics/alerts, job retention policy, secret management, and stronger idempotency. This is a learning prototype, not a production-ready CodeRabbit substitute.
 
-## Interview walkthrough
+## Engineering Trade-offs
 
-Explain why a queue decouples latency from webhook delivery, why jobs are keyed by commit SHA, what retries can duplicate, how unified diff line numbers work, and why structural validation cannot establish whether a model finding is correct. Review each source file and reproduce the tests yourself before representing this as your own engineering experience.
+- **Asynchronous processing:** Decouples webhook acknowledgment from computationally expensive code review operations.
+- **Job deduplication:** Uses deterministic, commit-based job identifiers to minimize redundant processing.
+- **Fault tolerance:** Implements retries with exponential backoff to handle transient failures.
+- **AI reliability:** Validates generated findings against actual changed source-code lines while recognizing that structural validation does not guarantee semantic correctness.
