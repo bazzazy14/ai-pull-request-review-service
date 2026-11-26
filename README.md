@@ -17,7 +17,7 @@ flowchart TD
 
 ## Getting started
 
-1. Install Docker with Compose, or Node 22 and Redis 7.
+1. Install Docker with Compose, or Node 22 (recommended; Node 20.15.1 also supported by the test runner) and Redis 7.
 2. Copy `.env.example` to `.env`. Set `GITHUB_REPOSITORY` to a repository you control, generate a random webhook secret (`openssl rand -hex 32`), and set a narrowly scoped GitHub token with pull request read permission (write only if posting reviews). Never commit `.env`.
 3. Run `docker compose up --build`. Check `curl http://localhost:3000/health`.
 4. Configure a GitHub repository webhook for pull request events, JSON content type, and the same secret. Use a trusted HTTPS tunnel or HTTPS reverse proxy to expose `/webhooks/github`; local loopback alone is not reachable by GitHub.
